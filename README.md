@@ -13,9 +13,6 @@ This repository contains the implementation and analysis of various machine lear
     - [Unsupervised Learning](#unsupervised-learning)
 3. [Datasets Used](#datasets-used)
 4. [Technologies](#technologies)
-5. [Setup and Usage](#setup-and-usage)
-6. [Future Work](#future-work)
-7. [Acknowledgments](#acknowledgments)
 
 ---
 
