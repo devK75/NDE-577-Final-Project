@@ -1,74 +1,74 @@
-# Employee Retention Prediction using Logistic Regression
+# Neural Network Implementation: Recurrent Neural Networks (RNN)
 
-This project analyzes HR data to predict employee turnover based on factors such as job satisfaction, performance, and salary. A Logistic Regression model is employed to classify whether an employee will leave the company (`left = 1`) or stay (`left = 0`).
+This project implements a basic Recurrent Neural Network (RNN) to predict sequences and overcome challenges like the vanishing gradient problem. The project focuses on text data and includes a custom implementation of RNN layers, activation functions, and backpropagation through time (BPTT).
 
 ## Project Overview
 
-The dataset consists of 14,999 employee records with the following features:
-- **Quantitative Variables**:
-  - `satisfaction_level`: Job satisfaction level.
-  - `last_evaluation`: Last performance evaluation score.
-  - `number_project`: Number of projects assigned.
-  - `average_monthly_hours`: Average hours worked per month.
-  - `time_spend_company`: Number of years spent in the company.
-- **Qualitative Variables**:
-  - `Work_accident`: Whether the employee experienced a workplace accident (binary).
-  - `left`: Target variable indicating if the employee left (binary).
-  - `promotion_last_5years`: Whether the employee was promoted in the last five years (binary).
-  - `sales`: Department of the employee.
-  - `salary`: Salary level (categorical: low, medium, high).
+Recurrent Neural Networks are powerful models for sequence prediction tasks, such as time-series forecasting and text generation. This project includes:
+- A detailed explanation of the vanishing gradient problem and its solutions.
+- A preprocessing pipeline for text data from Reddit comments.
+- A custom RNN implementation, including forward propagation, backward propagation (BPTT), and training.
 
-### Objective
-To identify key factors influencing employee turnover and build a predictive model to classify employee retention.
+### Objectives
+- Implement a custom RNN for sequence prediction.
+- Train the model on tokenized text data to predict word sequences.
+- Explore strategies to handle the vanishing gradient problem.
 
 ---
 
-## Key Steps and Insights
+## Key Concepts and Features
 
-### 1. Data Preprocessing
-- **Missing Values**:
-  - No missing values were found in the dataset.
-- **Feature Engineering**:
-  - Created dummy variables for categorical features (`sales`, `salary`) using one-hot encoding.
-  - Standardized quantitative features using `StandardScaler` for uniform scaling.
+### Vanishing Gradient Problem
+- **Description**:
+  - Occurs when gradients become too small during backpropagation, preventing effective weight updates.
+  - Common in deep networks like RNNs.
+- **Solutions**:
+  - Use activation functions like ReLU/Leaky ReLU.
+  - Employ LSTM/GRU architectures for their gradient-preserving mechanisms.
+  - Gradient clipping to limit gradient magnitude.
 
-### 2. Exploratory Data Analysis (EDA)
-- **Retention vs. Turnover**:
-  - Majority of employees (76%) stayed with the company.
-  - 24% of employees left.
-- **Key Observations**:
-  - Employees who left had:
-    - Lower job satisfaction levels.
-    - Higher last evaluation scores and more projects.
-    - Higher average monthly hours.
-  - Employees in sales and technical roles, with low salaries, were more likely to leave.
-  - No employees who left had received a promotion in the last five years.
+### Data Preprocessing
+- **Dataset**: Text data from a Reddit dataset (`reddit.csv`).
+- **Steps**:
+  - Tokenized sentences and added special tokens (`SENTENCE_START`, `SENTENCE_END`).
+  - Built a vocabulary of 8,000 most frequent words.
+  - Replaced rare words with an `UNKNOWN_TOKEN`.
+  - Converted tokenized sentences into numerical sequences for training.
 
-- **Visualizations**:
-  - Box plots for quantitative variables (e.g., satisfaction level, time spent).
-  - Count plots for categorical variables (e.g., salary, department).
-  - Correlation heatmap showed moderate relationships between some features.
+### RNN Implementation
+- **Custom Classes**:
+  - `RNNLayer`: Implements forward and backward passes for an RNN cell.
+  - `MultiplyGate`, `AddGate`, `Tanh`, `Softmax`: Define the basic operations and activations.
+- **Model Architecture**:
+  - Input-to-Hidden (`U`), Hidden-to-Hidden (`W`), Hidden-to-Output (`V`) weight matrices.
+  - Forward pass predicts word probabilities at each time step.
+  - BPTT computes gradients for weights across time steps.
+- **Training**:
+  - Loss computed using cross-entropy.
+  - Stochastic Gradient Descent (SGD) updates weights.
+  - Adaptive learning rate adjusts based on loss trends.
 
-### 3. Model Training and Evaluation
-- **Model**: Logistic Regression.
-- **Data Split**:
-  - Training: 70%
-  - Testing: 30%
-- **Accuracy**:
-  - Logistic Regression achieved an accuracy of **78.6%** on the test set.
-- **Feature Importance**:
-  - StandardScaler improved model performance by normalizing feature ranges.
-  - Dummy variables for categorical features captured important patterns, especially for `salary` and `sales`.
+---
+
+## Results and Insights
+
+### Training Results
+- Trained the model on 100 sequences for 10 epochs with a learning rate of 0.005.
+- Loss decreased consistently, demonstrating successful training:
+  - Initial loss: **8.98**
+  - Final loss: **5.66**
+
+### Key Observations
+- Custom RNN implementation effectively learned sequence patterns from text.
+- Challenges like the vanishing gradient were managed using small sequence lengths and gradient clipping.
 
 ---
 
 ## Technologies Used
-- **Python Libraries**:
-  - `pandas` and `numpy` for data manipulation.
-  - `seaborn` and `matplotlib` for visualizations.
-  - `scikit-learn` for model building and evaluation.
-- **Model**:
-  - Logistic Regression for binary classification.
 
-## Conclusion
-This project highlights the potential of Logistic Regression in predicting employee turnover and understanding retention factors. While the model achieves reasonable accuracy, future improvements could focus on advanced algorithms and addressing data imbalances for more robust predictions.
+- **Python Libraries**:
+  - `numpy` for numerical operations.
+  - `nltk` for text tokenization and preprocessing.
+  - `matplotlib` for loss visualization.
+
+
